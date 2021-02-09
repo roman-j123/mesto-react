@@ -79,13 +79,6 @@ function App() {
     
       <ImagePopup card={selectedCard} isOpen={isOpen} onClose={closeAllPopups}/>
     
-    <section className="popup popup_type_del">
-      <div className="popup__container">
-        <button className="popup__close" type="button" title="Закрыть окно" aria-label="Закрыть"></button>
-        <p className="popup__header">Вы уверены?</p>
-        <button type="button" className="popup__button">Да</button>
-      </div>
-    </section>
   </>
   );
 }
