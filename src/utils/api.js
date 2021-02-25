@@ -83,6 +83,9 @@ class Api {
             }
         }).then(this._checkResponse())
     }
+    changeLikeStatus(id, state) {
+        return state ? this.likeCard(id) : this.dislikeCard(id);
+    }
     updateAvatar(item) {
         return fetch(`${this._address}/v1/${this._group}/users/me/avatar`, {
             method: 'PATCH',
