@@ -1,5 +1,4 @@
 .elements__delete {
-  display: block;
   width: 19px;
   height: 19px;
   position: absolute;
@@ -14,4 +13,10 @@
 }
 .elements__delete:hover {
   opacity: .6;
+}
+.elements__delete_visible {
+  display: block;
+}
+.elements__delete_hidden {
+  display: none;
 }
