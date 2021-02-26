@@ -8,6 +8,7 @@ import Footer from './Footer.js';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -69,7 +70,12 @@ function App() {
     }).catch(error => {
       console.log(`Error: ${error}`)
     })
-    console.log('Delete card')
+  }
+  function handleUpdateUser(user) {
+    api.updateUser(user).then(response => {
+      setCurrentUser(response);
+    })
+    closeAllPopups();
   }
   return (
     <>
@@ -97,16 +103,7 @@ function App() {
         </section>        
       </PopupWithForm>
       
-      <PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-        <section className="popup__section">
-          <input type="text" className="popup__input popup__input_type_name" name="name" defaultValue="" placeholder="Имя пользователя" minLength="2" maxLength="40" required />
-          <span className="popup__input-error" id="name_error"></span>
-        </section>
-        <section className="popup__section">
-          <input type="text" className="popup__input popup__input_type_description" name="description" defaultValue="" placeholder="Описание пользователя" minLength="2" maxLength="200" required />
-          <span className="popup__input-error" id="description_error"></span>
-        </section>
-      </PopupWithForm>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
 
       <PopupWithForm name="avatar" title="Обновить аватар" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
         <section className="popup__section">

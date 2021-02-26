@@ -37,10 +37,7 @@ class Api {
                 authorization: this._token,
                 'Content-Type': 'application/json'                
             },
-            body: JSON.stringify({
-                name: item.name,
-                about: item.description
-            })
+            body: JSON.stringify(item)
         }).then(this._checkResponse())
     }
     addNewCard(name, link) {
