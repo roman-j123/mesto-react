@@ -75,12 +75,16 @@ function App() {
   function handleUpdateUser(user) {
     api.updateUser(user).then(response => {
       setCurrentUser(response);
+    }).catch(error => {
+      console.log(`Error: ${error}`)
     })
     closeAllPopups();
   }
   function handleUpdateAvatar(item) {
     api.updateAvatar(item).then(reponse => {
       setCurrentUser(reponse)
+    }).catch(error => {
+      console.log(`Error: ${error}`)
     })
     closeAllPopups();
   }
