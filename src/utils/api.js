@@ -90,9 +90,7 @@ class Api {
                 authorization: this._token,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                avatar: item.avatar,
-            })
+            body: JSON.stringify(item)
         }).then(this._checkResponse())
     }
 }
