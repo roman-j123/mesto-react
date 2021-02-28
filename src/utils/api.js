@@ -40,17 +40,14 @@ class Api {
             body: JSON.stringify(item)
         }).then(this._checkResponse())
     }
-    addNewCard(name, link) {
+    addNewCard(item) {
         return fetch(`${this._address}/v1/${this._group}/cards`, {
             method: 'POST',
             headers: {
                 authorization: this._token,
                 'Content-Type': 'application/json'
             }, 
-            body: JSON.stringify({
-                name: name,
-                link: link
-            })
+            body: JSON.stringify(item)
         }).then(this._checkResponse())
     }
     removeCard(id) {

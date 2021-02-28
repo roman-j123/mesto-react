@@ -5,11 +5,11 @@ import '../index.css';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -75,18 +75,27 @@ function App() {
   function handleUpdateUser(user) {
     api.updateUser(user).then(response => {
       setCurrentUser(response);
+      closeAllPopups();
     }).catch(error => {
       console.log(`Error: ${error}`)
     })
-    closeAllPopups();
   }
   function handleUpdateAvatar(item) {
     api.updateAvatar(item).then(reponse => {
       setCurrentUser(reponse)
+      closeAllPopups();
     }).catch(error => {
       console.log(`Error: ${error}`)
     })
-    closeAllPopups();
+  }
+  function handleAddPlace(item) {
+    console.log(item);
+    api.addNewCard(item).then(response => {
+      setCards([response, ...cards]);
+      closeAllPopups();
+    }).catch(error => {
+      console.log(`Error: ${error}`);
+    })
   }
   return (
     <>
@@ -103,22 +112,27 @@ function App() {
       />
       <Footer />
       
-      <PopupWithForm name="place" title="Новое место" isOpen={isAddPlacePopupOpen} buttonText="Создать" onClose={closeAllPopups}>
-        <section className="popup__section">
-          <input type="text" className="popup__input popup__input_type_place" name="place" defaultValue="" placeholder="Название" minLength="2" maxLength="30" required/>
-          <span className="popup__input-error" id="place_error"></span>
-        </section>
-        <section className="popup__section">
-          <input type="url" className="popup__input popup__input_type_url" name="url" defaultValue="" placeholder="Ссылка на картинку" required />
-          <span className="popup__input-error" id="url_error"></span>
-        </section>        
-      </PopupWithForm>
-      
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
-      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
-    
-      <ImagePopup card={selectedCard} isOpen={isOpen} onClose={closeAllPopups}/>
-      </CurrentUserContext.Provider>
+      <AddPlacePopup 
+        isOpen={isAddPlacePopupOpen} 
+        onClose={closeAllPopups}
+        onAddPlace={handleAddPlace} 
+      />
+      <EditProfilePopup 
+        isOpen={isEditProfilePopupOpen} 
+        onClose={closeAllPopups} 
+        onUpdateUser={handleUpdateUser}
+      />
+      <EditAvatarPopup 
+        isOpen={isEditAvatarPopupOpen} 
+        onClose={closeAllPopups} 
+        onUpdateAvatar={handleUpdateAvatar}
+      />
+      <ImagePopup 
+        card={selectedCard} 
+        isOpen={isOpen} 
+        onClose={closeAllPopups}
+      />
+    </CurrentUserContext.Provider>
     </>
   );
 }
